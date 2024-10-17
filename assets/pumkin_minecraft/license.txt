@@ -1,0 +1,11 @@
+Model Information:
+* title:	Pumkin Minecraft
+* source:	https://sketchfab.com/3d-models/pumkin-minecraft-6bd8382ddfc942b2970333a525ee0b06
+* author:	JDanielHE (https://sketchfab.com/JDanielHE)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Pumkin Minecraft" (https://sketchfab.com/3d-models/pumkin-minecraft-6bd8382ddfc942b2970333a525ee0b06) by JDanielHE (https://sketchfab.com/JDanielHE) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

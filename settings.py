@@ -3,7 +3,8 @@ from ursina import load_texture
 
 block_textures = []
 
-MAP_SIZE = 20
+TREE_DENSITY = 100
+MAP_SIZE = 40
 BASE_DIR = os.getcwd()
 BLOCKS_DIR  = os.path.join(BASE_DIR, 'assets/blocks')
 
