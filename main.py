@@ -18,7 +18,7 @@ ground = Entity(model='plane', collider='box', scale=150, texture='grass', textu
 ground.y=-5
 # EditorCamera()  # add camera controls for orbiting and moving the camera
 
-player = FirstPersonController()
+player = Player()
 
 window.fullscreen = True
 app.run()

@@ -3,6 +3,7 @@ from ursina import load_texture
 
 block_textures = []
 
+DEFAULT_BLOCK = 3
 TREE_DENSITY = 100
 MAP_SIZE = 40
 BASE_DIR = os.getcwd()
