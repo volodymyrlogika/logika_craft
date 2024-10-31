@@ -83,7 +83,6 @@ class Player(FirstPersonController):
             if Block.current >= len(block_textures):
                 Block.current = 0
             self.held_block.texture = block_textures[Block.current]
-
         
         if key == "scroll down":
             Block.current -= 1 
