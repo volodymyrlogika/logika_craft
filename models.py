@@ -5,6 +5,7 @@ from settings import *
 
 from perlin_noise import PerlinNoise
 from numpy import floor
+import pickle
 
 
 class Tree(Button):
@@ -24,8 +25,8 @@ class Tree(Button):
 class Block(Button):
     current = DEFAULT_BLOCK
 
-    def __init__(self, pos, texture_id=3, **kwargs):
-        super().__init__(parent=scene,
+    def __init__(self, pos, texture_id=3, parent=scene,  **kwargs):
+        super().__init__(parent=parent,
                          color=color.color(0, 0, random.uniform(0.9, 1)),
                          highlight_color=color.gray,
                          model='cube',
@@ -36,7 +37,9 @@ class Block(Button):
                          origin_y=-.5,
                          shader=basic_lighting_shader,
                          **kwargs)
+        scene.blocks[(self.x,self.y,self.z)] = texture_id
 
+        
 
 class Map(Entity):
     def __init__(self, **kwargs):
@@ -47,6 +50,8 @@ class Map(Entity):
                              scale=MAP_SIZE, texture=block_textures[5], texture_scale=(4, 4))
         self.ground.y = -3
         self.noise = PerlinNoise(octaves=2, seed=3505)
+        self.bg_music = Audio(
+            sound_file_name='assets\\audio\\crafting_game_music.mp3', autoplay=True, loop=True, volume=0.2)
 
     def generate(self):
         for x in range(MAP_SIZE):
@@ -64,6 +69,11 @@ class Player(FirstPersonController):
         super().__init__(**kwargs)
         self.map = map
         self.creative_mode = False
+        self.build_sound = Audio(
+            sound_file_name='assets\\audio\\wood01.ogg', autoplay=False, volume=0.5)
+        self.destroy_sound = Audio(
+            sound_file_name='assets\\audio\\gravel.ogg', autoplay=False, volume=0.5)
+
         self.held_block = Entity(model='cube', texture=block_textures[Block.current],
                                  parent=camera.ui, position=(0.6, -0.42),
                                  rotation=Vec3(30, -30, 10),
@@ -76,6 +86,7 @@ class Player(FirstPersonController):
 
         if key == "left mouse down" and mouse.hovered_entity and mouse.hovered_entity != self.map.ground:
             destroy(mouse.hovered_entity)
+            self.destroy_sound.play()
 
         if key == "right mouse down" and mouse.hovered_entity:
             # створюємо промінь і направляємо вперед гравця на відтань 15 блоків
@@ -84,8 +95,8 @@ class Player(FirstPersonController):
             # якщо є зіткнення і це блок
             if hit_info.hit and isinstance(hit_info.entity, Block):
                 # тоді будуємо блок
-                Block(hit_info.entity.position +
-                      hit_info.normal, Block.current)
+                Block(hit_info.entity.position + hit_info.normal, Block.current)
+                self.build_sound.play()
 
         if key == "scroll up":
             Block.current += 1
@@ -131,3 +142,19 @@ class Player(FirstPersonController):
             self.y = 10
             self.x = MAP_SIZE//2
             self.z = MAP_SIZE//2
+
+        if not self.creative_mode:
+            if self.x > MAP_SIZE:
+                self.x = MAP_SIZE
+            if self.z > MAP_SIZE:
+                self.z = MAP_SIZE
+
+            if self.x < 0:
+                self.x = 0
+            if self.z < 0 :
+                self.z = 0
+
+
+
+
+        
